@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Обработка (приход)</title>
+</head>
+<body>
+
+<div class="container my-5">
+
+<table class="table table-warning table-hover">
+    <p>
+
+    </p>
+
+    <thead>
+
+    <tr>
+      <th scope="col">Дата</th>
+      <th scope="col">Группа товаров</th>
+      <th scope="col">Товары</th>
+      <th scope="col">Контрагенты</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Цена продажная</th>
+        <th scope="col">Сумма</th>
+        <th scope="col">Номер документа</th>
+        <th scope="col">Единица измерения</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for i in rashod %}
+    <tr>
+      <th scope="row">{{ i.date }}</th>
+      <td>{{ i.good_id }}</td>
+      <td>{{ i.goods_id }}</td>
+      <td>{{ i.counterparty_id }}</td>
+        <td>{{ i.amount }}</td>
+        <td>{{ i.price_prod }}</td>
+        <td>{{ i.summa }}</td>
+        <td>{{ i.doc_number }}</td>
+        <td>{{ i.measure_id }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th scope="row"></th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+</body>
+</html>
