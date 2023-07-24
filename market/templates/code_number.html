@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Обработка (приход)</title>
+    <title>По коду товара</title>
 </head>
 <body>
 
@@ -13,9 +13,6 @@
 <table class="table table-warning table-hover">
     <p>
         <a href="{% url 'create_goods' %}"><button class="btn btn-primary" type="button">Внести товары</button></a>
-        <a href="{% url 'create_good' %}"><button class="btn btn-primary" type="button">Внести название товаров</button></a>
-        <a href="{% url 'create_measure' %}"><button class="btn btn-primary" type="button">Внести единицы измерения</button></a>
-        <a href="{% url 'create_deliver' %}"><button class="btn btn-primary" type="button">Внести контрагентов</button></a>
     </p>
 
     <thead>
@@ -41,25 +38,23 @@
 
     <tr>
 
-      <th scope="col">Дата</th>
-      <th scope="col">Наименование товара</th>
+      <th scope="col">Название товара</th>
       <th scope="col">Код товара</th>
       <th scope="col">Номер товара</th>
-      <th scope="col">Единица измерение</th>
-      <th scope="col">Количество</th>
-        <th scope="col">Цена</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Цена</th>
+      <th scope="col">Описание</th>
   </thead>
 
   <tbody>
     {% for i in goods %}
     <tr>
-      <th scope="row">{{ i.date }}</th>
-      <td>{{ i.good_name }}</td>
+      <th scope="row">{{ i.name }}</th>
       <td>{{ i.code_number }}</td>
       <td>{{ i.good_number }}</td>
-      <td>{{ i.measure_name }}</td>
-        <td>{{ i.amount }}</td>
-        <td>{{ i.price }}</td>
+      <td>{{ i.date }}</td>
+      <td>{{ i.price }}</td>
+        <td>{{ i.description }}</td>
     </tr>
     {% endfor %}
 

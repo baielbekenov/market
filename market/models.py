@@ -2,98 +2,55 @@ from django.db import models
 
 
 class Good(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Название')
+    name = models.CharField(max_length=25, verbose_name='Название товара')
+    code_number = models.CharField(max_length=4, verbose_name='Код товара')
+
+    def __str__(self):
+        return self.name
+
+
+class Measure(models.Model):
+    name = models.CharField(max_length=30, verbose_name='Единица измерения')
+
+    def __str__(self):
+        return self.name
+
+
+class Deliver(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Поставщик')
 
     def __str__(self):
         return self.name
 
 
 class Goods(models.Model):
-    name = models.CharField(max_length=200, verbose_name='Название')
-
-    def __str__(self):
-        return self.name
-
-
-class CounterParty(models.Model):
-    name = models.CharField(max_length=250, verbose_name='Контрагенты')
-
-    def __str__(self):
-        return self.name
-
-
-class Measurement(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Единица измерения')
-
-    def __str__(self):
-        return self.name
-
-
-class VhodOstatok(models.Model):
-    date = models.DateField(auto_now_add=True, verbose_name='Дата')
-    good_id = models.ForeignKey(Good, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Группа товаров')
-    goods_id = models.ForeignKey(Goods, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Товары')
-    counterparty_id = models.ForeignKey(CounterParty, on_delete=models.SET_NULL,
-                                        null=True, blank=True, verbose_name='Контрагенты')
+    date = models.DateField(auto_now_add=True)
+    good_id = models.ForeignKey(Good, on_delete=models.SET_NULL, blank=True, null=True,
+                                verbose_name='Наименование товара')
+    measure_id = models.ForeignKey(Measure, on_delete=models.SET_NULL, blank=True, null=True,
+                                   verbose_name='Единица измерение')
+    deliver_id = models.ForeignKey(Deliver, on_delete=models.SET_NULL, blank=True, null=True,
+                                   verbose_name='Поставщики')
+    good_name = models.CharField(max_length=25)
+    code_number = models.CharField(max_length=4)
+    good_number = models.CharField(max_length=4, verbose_name='Номер товара')
+    measure_name = models.CharField(max_length=30)
     amount = models.IntegerField(verbose_name='Количество')
-    price_uch = models.FloatField(verbose_name='Цена учетная')
-    price_prod = models.FloatField(verbose_name='Цена продажная')
-    summa = models.FloatField(verbose_name='Сумма')
-    measure_id = models.ForeignKey(Measurement, on_delete=models.SET_NULL,
-                                   null=True, blank=True, verbose_name='Единица измерения')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+
 
     def __str__(self):
-        return self.goods_id
+        return self.good_number
 
 
-class ObrabotkaPrihod(models.Model):
-    date = models.DateField(auto_now_add=True, verbose_name='Дата')
-    good_id = models.ForeignKey(Good, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Группа товаров')
-    goods_id = models.ForeignKey(Goods, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Товары')
-    counterparty_id = models.ForeignKey(CounterParty, on_delete=models.SET_NULL,
-                                        null=True, blank=True, verbose_name='Контрагенты')
-    amount = models.IntegerField(verbose_name='Количество')
-    price_uch = models.FloatField(verbose_name='Цена учетная')
-    price_prod = models.FloatField(verbose_name='Цена продажная')
-    summa = models.FloatField(verbose_name='Сумма')
-    doc_number = models.IntegerField(verbose_name='Номер документа')
-    measure_id = models.ForeignKey(Measurement, on_delete=models.SET_NULL,
-                                   null=True, blank=True, verbose_name='Единица измерения')
+class Transactions(models.Model):
+    TRANSACTION_TYPES = (
+        ('Income', 'Income'),
+        ('Outcome', 'Outcome'),
+    )
 
-    def __str__(self):
-        return str(self.goods_id)
-
-
-class ObrabotkaRashod(models.Model):
-    date = models.DateField(auto_now_add=True, verbose_name='Дата')
-    good_id = models.ForeignKey(Good, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Группа товаров')
-    goods_id = models.ForeignKey(Goods, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Товары')
-    counterparty_id = models.ForeignKey(CounterParty, on_delete=models.SET_NULL,
-                                        null=True, blank=True, verbose_name='Контрагенты')
-    amount = models.IntegerField(verbose_name='Количество')
-    price_prod = models.FloatField(verbose_name='Цена продажная')
-    summa = models.FloatField(verbose_name='Сумма')
-    doc_number = models.IntegerField(verbose_name='Номер документа')
-    measure_id = models.ForeignKey(Measurement, on_delete=models.SET_NULL,
-                                   null=True, blank=True, verbose_name='Единица измерения')
-
-    def __str__(self):
-        return str(self.goods_id)
-
-
-class IshodRashod(models.Model):
-    date = models.DateField(auto_now_add=True, verbose_name='Дата')
-    good_id = models.ForeignKey(Good, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Группа товаров')
-    goods_id = models.ForeignKey(Goods, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Товары')
-    counterparty_id = models.ForeignKey(CounterParty, on_delete=models.SET_NULL,
-                                        null=True, blank=True, verbose_name='Контрагенты')
-    amount = models.IntegerField(verbose_name='Количество')
-    price_uch = models.FloatField(verbose_name='Цена учетная')
-    price_prod = models.FloatField(verbose_name='Цена продажная')
-    summa = models.FloatField(verbose_name='Сумма')
-    measure_id = models.ForeignKey(Measurement, on_delete=models.SET_NULL,
-                                   null=True, blank=True, verbose_name='Единица измерения')
-
-    def __str__(self):
-        return self.goods_id
-
+    goods = models.ForeignKey(Goods, on_delete=models.CASCADE, related_name='transactions')
+    transaction_type = models.CharField(max_length=7, choices=TRANSACTION_TYPES)
+    quantity = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
