@@ -51,6 +51,7 @@
       <th scope="col">Количество</th>
         <th scope="col">Цена</th>
         <th scope="col">Сумма</th>
+        <th scope="col">Удаление</th>
   </thead>
 
   <tbody>
@@ -64,6 +65,7 @@
         <td>{{ i.weight }}</td>
         <td>{{ i.price }}</td>
         <td>{{ i.total_price }}</td>
+        <td><a href="{% url 'deletegoods' i.id %}"><button class="btn btn-primary" type="button">Удалить</button></a></td>
     </tr>
     {% endfor %}
 

@@ -59,6 +59,12 @@ def create_good(request):
     return render(request, 'create_good.html', context)
 
 
+def deletegoods(request, pk):
+    goods = get_object_or_404(Goods, id=pk)
+    goods.delete()
+    return redirect('/')
+
+
 def create_measure(request):
     if request.method == 'POST':
         form = MeasureForm(request.POST)
