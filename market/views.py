@@ -8,10 +8,11 @@ from .models import Goods, Good, Measure, Deliver
 
 def index(request):
     goods = Goods.objects.all().order_by('-id')
-    total_price = goods.aggregate(total_price=Sum('price'))['total_price'] or 0
+    total_pricee = goods.aggregate(total_pricee=Sum('total_price'))['total_pricee'] or 0
+    formatted_total_price = "{:.2f}".format(total_pricee).rstrip('0').rstrip('.')
     total_goods_count = Goods.objects.count()
     page = Goods.objects.all().distinct('name')
-    context = {'goods': goods, 'total_price': total_price, 'total_goods_count': total_goods_count,
+    context = {'goods': goods, 'formatted_total_price': formatted_total_price, 'total_goods_count': total_goods_count,
                'page': page}
     return render(request=request, template_name='index.html', context=context)
 

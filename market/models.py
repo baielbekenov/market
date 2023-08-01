@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class Good(models.Model):
@@ -35,12 +37,26 @@ class Goods(models.Model):
     code_number = models.CharField(max_length=4)
     good_number = models.CharField(max_length=4, verbose_name='Номер товара')
     measure_name = models.CharField(max_length=30)
-    amount = models.IntegerField(verbose_name='Количество')
+    weight = models.DecimalField(max_digits=10, decimal_places=3, verbose_name='Вес')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Общая цена',  blank=True, null=True)
 
 
     def __str__(self):
         return self.good_number
+
+
+@receiver(pre_save, sender=Goods)
+def update_total_price(sender, instance, **kwargs):
+    if instance.price is not None and instance.weight is not None:
+        instance.total_price = instance.price * instance.weight
+
+
+@receiver(pre_save, sender=Goods)
+def update_total_price(sender, instance, **kwargs):
+    if instance.price is not None and instance.weight is not None:
+        instance.total_price = instance.price * instance.weight
+
 
 
 class Transactions(models.Model):

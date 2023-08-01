@@ -8,7 +8,7 @@ class GoodsForm(ModelForm):
 
     class Meta:
         model = Goods
-        fields = ['good_id', 'measure_id', 'deliver_id', 'good_number', 'amount', 'price']
+        fields = ['good_id', 'measure_id', 'deliver_id', 'good_number', 'weight', 'price']
 
 
 class GoodForm(ModelForm):

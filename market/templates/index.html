@@ -25,7 +25,7 @@
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col">Количество единиц</th>
-      <th scope="col">Сумма</th>
+      <th scope="col">Общая сумма</th>
       <th scope="col"></th>
     </tr>
 
@@ -34,7 +34,9 @@
         <th scope="row"> </th>
         <th scope="row"> </th>
         <th scope="row">{{ total_goods_count }}</th>
-        <th scope="row">{{ total_price }}</th>
+        <th scope="row">{{ formatted_total_price }}</th>
+        <th scope="row"></th>
+        <th scope="row"></th>
         <th scope="row"></th>
 
     </tr>
@@ -48,6 +50,7 @@
       <th scope="col">Единица измерение</th>
       <th scope="col">Количество</th>
         <th scope="col">Цена</th>
+        <th scope="col">Сумма</th>
   </thead>
 
   <tbody>
@@ -58,8 +61,9 @@
       <td>{{ i.code_number }}</td>
       <td>{{ i.good_number }}</td>
       <td>{{ i.measure_name }}</td>
-        <td>{{ i.amount }}</td>
+        <td>{{ i.weight }}</td>
         <td>{{ i.price }}</td>
+        <td>{{ i.total_price }}</td>
     </tr>
     {% endfor %}
 
